@@ -1,0 +1,42 @@
+-#  This file is app/views/movies/index.html.haml
+= form_tag :action => 'search_tmdb' do
+
+  %label{:for => 'search_terms'} Search TMDb for a movie
+  = text_field_tag 'search_terms'  
+  = submit_tag 'Search TMDb'
+  
+  
+%div{:align => "right"}
+  - if current_user
+    = current_user.name
+    = link_to 'Sign out', signout_path
+  - else
+    Sign in
+    = link_to 'facebook', '/auth/facebook', id: "sign_in"
+    or
+    = link_to 'twitter', '/auth/twitter', id: "sign_in"
+
+%h1 All Movies
+ 
+%table#movies
+  %thead
+    %tr
+      %th Number
+      %th Movie Title
+      %th Rating
+      %th Release Date
+      %th More Info
+  %tbody
+    - @movies.each_with_index do |movie, index|
+      %tr{:class => [('g' if movie.rating =~ /^G$/),('pg' if movie.rating =~ /^PG$/),
+                     ('pg13' if movie.rating =~ /^PG-13$/),('r' if movie.rating =~ /^R$/),
+                     ('nc17' if movie.rating =~ /^NC-17$/)]}
+        %td= index = index+1
+        %td= movie.title
+        %td= movie.rating
+        %td= movie.release_date
+        %td= link_to "More about #{movie.title}", movie_path(movie)
+        
+-# add to end of index.html.haml
+
+= link_to 'Add new movie', new_movie_path
