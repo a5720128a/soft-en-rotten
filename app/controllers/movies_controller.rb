@@ -11,11 +11,7 @@ class MoviesController < ApplicationController
     render(:partial => 'movie', :object => @movie) if request.xhr?
     # will render app/views/movies/show.html.haml by default
   end
-  
-  def new
-    # default: render 'new' template
-  end
-  
+
   def create
     @movie = Movie.create!(movie_params)
     flash[:notice] = "#{@movie.title} was successfully created."
