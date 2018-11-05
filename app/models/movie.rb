@@ -6,6 +6,6 @@ class Movie < ActiveRecord::Base
     #    Tmdb::Movie.find(string)
     #end
     
-    validates_presence_of :title
+    validates_presence_of :title, :rating, :description, :release_date
     #attr_accessible :title, :rating, :description, :release_date
 end

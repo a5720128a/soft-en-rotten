@@ -24,13 +24,18 @@ require 'capybara/rspec'
 # require only the support files necessary.
 
 OmniAuth.config.test_mode = true
-omniauth_hash = { 'provider' => 'twitter', 'uid' => '12345', 
-                  'info' => {
-                    'name' => 'natasha'
-                  }
-                }
+omniauth_hash = { 'provider' => 'twitter',
+                  'uid' => '12345',
+                  'name' => 'natasha' }
  
-  OmniAuth.config.add_mock(:github, omniauth_hash)
+OmniAuth.config.add_mock(:twitter, omniauth_hash)
+
+omniauth_hash2 = { 'provider' => 'facebook',
+                  'uid' => '23456',
+                  'name' => 'shatana' }
+ 
+OmniAuth.config.add_mock(:facebook, omniauth_hash2)
+
 
 Dir[Rails.root.join('spec', 'support', '**', '*.rb')].each { |f| require f }
 

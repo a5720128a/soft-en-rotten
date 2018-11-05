@@ -38,5 +38,8 @@
         %td= link_to "More about #{movie.title}", movie_path(movie)
         
 -# add to end of index.html.haml
-
-= link_to 'Add new movie', new_movie_path
+%div
+  - if current_user
+    = link_to 'Add new movie', new_movie_path
+  - else
+    = 'please sign-in'
