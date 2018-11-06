@@ -10,6 +10,6 @@ When(/^I click banner "([^"]*)"$/) do |element|
   click_on(element)
 end
 
-Then(/^I should be on the "([^"]*)" on the home page$/) do |arg1|
-  page.should have_content arg1
+And(/^I should be see "([^"]*)"$/) do |arg1|
+  page.should have_content arg1 
 end

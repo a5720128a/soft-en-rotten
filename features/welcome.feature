@@ -7,4 +7,4 @@ Feature: Welcome
   		Given I am on the home page
   		Then I should see "All Movies"
   		When I click banner "ROTTEN POTATOES"
-  		Then I should be on the "ROTTEN POTATOES" in "banner"
+  		And I should be see "All Movies"
