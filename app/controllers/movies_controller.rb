@@ -1,7 +1,9 @@
 # This file is app/controllers/movies_controller.rb
 class MoviesController < ApplicationController
+  
   require 'themoviedb-api'
   Tmdb::Api.key("62eb90992ffe3b066599f478d9738cc6")
+  
   def index
     @movies = Movie.all.order(:title)
   end
@@ -11,7 +13,11 @@ class MoviesController < ApplicationController
     render(:partial => 'movie', :object => @movie) if request.xhr?
     # will render app/views/movies/show.html.haml by default
   end
-
+  
+  def new
+    # for new movie page
+  end
+  
   def create
     @movie = Movie.create!(movie_params)
     flash[:notice] = "#{@movie.title} was successfully created."
@@ -40,6 +46,7 @@ class MoviesController < ApplicationController
     redirect_to movies_path
   end
   
+
   def search_tmdb
     @movie = Tmdb::Search.movie(params[:search_terms], language: 'en')
     if(@movie.results.length < 1)
@@ -48,6 +55,7 @@ class MoviesController < ApplicationController
       redirect_to movies_path
     end
   end
+
   
   private
     def movie_params

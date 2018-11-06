@@ -8,4 +8,5 @@ class Movie < ActiveRecord::Base
     
     validates_presence_of :title, :rating, :description, :release_date
     #attr_accessible :title, :rating, :description, :release_date
+
 end
