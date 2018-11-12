@@ -11,9 +11,17 @@
 %h3 Description:
  
 %p#description= @movie.description
- 
-= link_to 'Cancel', "/",:onclick => "window.location.replace('/movies');"
--# modify last 2 lines of app/views/movies/show.html.haml to:
-= link_to 'Edit info', edit_movie_path(@movie)
--# This Delete link will not really be a link, but a form:
-= link_to 'Delete', movie_path(@movie), :method => :delete
+
+
+- if current_user
+  = link_to 'Edit info', edit_movie_path(@movie)
+  -# This Delete link will not really be a link, but a form:
+  = button_to 'Delete', movie_path(@movie), :method => :delete
+  = link_to "Cancel", movies_path
+  
+- else
+  = 'Please sign in before edit and delete movies'
+  = link_to "Cancel", movies_path
+
+
+

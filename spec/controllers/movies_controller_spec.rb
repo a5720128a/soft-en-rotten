@@ -59,9 +59,9 @@ RSpec.describe MoviesController, type: :controller do
             expect(assigns(:movie).title).to include("Space Balls")
         end
         
-        it "redirects to the home page" do
+        it "redirects to the movie page" do
             post :create, movie: @mock_movie_attributes
-            expect(response).to redirect_to(:action => 'index')
+            expect(response).to redirect_to("/movies/#{assigns(:movie).id}")
         end
         
     end
@@ -137,6 +137,36 @@ RSpec.describe MoviesController, type: :controller do
         it "should return correct results" do
             @movie = Tmdb::Search.movie("The Matrix", language: 'en')
             expect(@movie.to_s).to include("The Matrix")
+        end
+        
+    end
+    
+    describe "add movie from search tmdb test" do
+        
+        before (:each) do
+            @title = {:title => 'Space Balls'}
+            @description = {:description => "test"}
+            #@release_date = {:release_date => '2017-06-06'}
+            @rating = {:rating => 'PG'}
+        end
+      
+        it "saves the new movie in the database" do
+            expect {
+            post :addMovieTMDB, title: @title, rating: @rating, release_date: '2017-06-06', 
+            description: @description
+            }.to change(Movie,:count).by(1)
+        end
+        
+        it "assigns the saved movie to @movie" do
+            post :addMovieTMDB, title: @title, rating: @rating, release_date: '2017-06-06', 
+            description: @description
+            expect(assigns(:query_movie).title).to include("Space Balls")
+        end
+        
+        it "redirects to the movie page" do
+            post :addMovieTMDB, title: @title, rating: @rating, release_date: '2017-06-06', 
+            description: @description
+            expect(response).to redirect_to("/movies/#{assigns(:query_movie).id}")
         end
         
     end

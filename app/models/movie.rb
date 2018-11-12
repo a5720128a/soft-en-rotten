@@ -1,4 +1,4 @@
-class Movie < ActiveRecord::Base
+class Movie < ActiveRecord::Base#new_record?
     #def user_params
     #    params.require(:user).permit(:title, :rating, :description, :release_date)
     #end

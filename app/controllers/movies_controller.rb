@@ -9,9 +9,10 @@ class MoviesController < ApplicationController
   end
   
   def show
-    @movie = Movie.find(params[:id]) # look up movie by unique ID
+    id = params[:id] # retrieve movie ID from URI route
+    @movie = Movie.find(id) # look up movie by unique ID
     render(:partial => 'movie', :object => @movie) if request.xhr?
-    # will render app/views/movies/show.html.haml by default
+    # will render app/views/movies/show.<extension> by default
   end
   
   def new
@@ -21,7 +22,11 @@ class MoviesController < ApplicationController
   def create
     @movie = Movie.create!(movie_params)
     flash[:notice] = "#{@movie.title} was successfully created."
-    redirect_to movies_path
+    if @movie == nil
+      redirect_to movies_path
+    else
+      redirect_to movie_path(@movie)
+    end
   end
   
   def edit
@@ -41,18 +46,36 @@ class MoviesController < ApplicationController
   
   def destroy
     @movie = Movie.find(params[:id])
-    @movie.destroy
+    @movie.delete
     flash[:notice] = "Movie '#{@movie.title}' deleted."
     redirect_to movies_path
   end
   
 
   def search_tmdb
+    @data = Movie.all
     @movie = Tmdb::Search.movie(params[:search_terms], language: 'en')
     if(@movie.results.length < 1)
       # if failure
       flash[:warning] = "'#{params[:search_terms]}' was not found in TMDb."
       redirect_to movies_path
+    end
+    
+    puts(@movie.results[10])
+  end
+  
+  def addMovieTMDB
+    movieTitle = params[:title]
+    movieRate = params[:rating]
+    movieRel = params[:release_date]
+    movieDes = params[:description]
+    @movie = Movie.create!([{:title => movieTitle , :rating => movieRate, :release_date => movieRel , :description => movieDes}])
+    @query_movie = Movie.find_by title: movieTitle.to_s, description: movieDes.to_s
+    flash[:notice] = "#{@query_movie.title} was successfully created."
+    if @query_movie == nil
+      redirect_to movies_path
+    else
+      redirect_to movie_path(@query_movie.id)
     end
   end
 

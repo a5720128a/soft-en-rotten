@@ -31,17 +31,15 @@
       %tr{:class => [('g' if movie.rating =~ /^G$/),('pg' if movie.rating =~ /^PG$/),
                      ('pg13' if movie.rating =~ /^PG-13$/),('r' if movie.rating =~ /^R$/),
                      ('nc17' if movie.rating =~ /^NC-17$/)]}
-        %td= index = index+1
+        %td= index+1
         %td= movie.title
         %td= movie.rating
         %td= movie.release_date
         %td= link_to "More about #{movie.title}", movie_path(movie)
         
-// -# add to end of index.html.haml
-// %div
-//   - if current_user
-//     = link_to 'Add new movie', new_movie_path
-//   - else
-//     = 'Please sign in before add movies'
-
-= link_to 'Add new movie', new_movie_path
+-# add to end of index.html.haml
+%div
+  - if current_user
+    = link_to 'Add new movie', new_movie_path
+  - else
+    = 'Please sign in before add movies'
