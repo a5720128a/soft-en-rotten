@@ -1,6 +1,9 @@
 # This file is app/controllers/movies_controller.rb
 class MoviesController < ApplicationController
   
+  protect_from_forgery with: :exception
+  
+  #TMDB
   require 'themoviedb-api'
   Tmdb::Api.key("62eb90992ffe3b066599f478d9738cc6")
   
@@ -14,6 +17,7 @@ class MoviesController < ApplicationController
     render(:partial => 'movie', :object => @movie) if request.xhr?
     # will render app/views/movies/show.<extension> by default
   end
+
   
   def new
     # for new movie page
@@ -37,11 +41,11 @@ class MoviesController < ApplicationController
     @movie = Movie.find params[:id]
     @movie.update_attributes!(movie_params)
     flash[:notice] = "#{@movie.title} was successfully updated."
-    # redirect_to movie_path(@movie)
-    respond_to do |client_wants|
-      client_wants.html {  redirect_to movie_path(@movie)  } # as before
-      client_wants.xml  {  render :xml => @movie.to_xml    }
-    end
+    redirect_to movie_path(@movie)
+    # respond_to do |client_wants|
+    #   client_wants.html {  redirect_to movie_path(@movie)  } # as before
+    #   client_wants.xml  {  render :xml => @movie.to_xml    }
+    # end
   end
   
   def destroy
@@ -60,25 +64,7 @@ class MoviesController < ApplicationController
       flash[:warning] = "'#{params[:search_terms]}' was not found in TMDb."
       redirect_to movies_path
     end
-    
-    puts(@movie.results[10])
   end
-  
-  def addMovieTMDB
-    movieTitle = params[:title]
-    movieRate = params[:rating]
-    movieRel = params[:release_date]
-    movieDes = params[:description]
-    @movie = Movie.create!([{:title => movieTitle , :rating => movieRate, :release_date => movieRel , :description => movieDes}])
-    @query_movie = Movie.find_by title: movieTitle.to_s, description: movieDes.to_s
-    flash[:notice] = "#{@query_movie.title} was successfully created."
-    if @query_movie == nil
-      redirect_to movies_path
-    else
-      redirect_to movie_path(@query_movie.id)
-    end
-  end
-
   
   private
     def movie_params

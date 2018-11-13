@@ -30,13 +30,13 @@
     - @movies.each_with_index do |movie, index|
       %tr{:class => [('g' if movie.rating =~ /^G$/),('pg' if movie.rating =~ /^PG$/),
                      ('pg13' if movie.rating =~ /^PG-13$/),('r' if movie.rating =~ /^R$/),
-                     ('nc17' if movie.rating =~ /^NC-17$/)]}
+                     ('nc17' if movie.rating =~ /^NC-17$/)], :id => movie.title}
         %td= index+1
         %td= movie.title
         %td= movie.rating
         %td= movie.release_date
         %td= link_to "More about #{movie.title}", movie_path(movie)
-        
+      
 -# add to end of index.html.haml
 %div
   - if current_user

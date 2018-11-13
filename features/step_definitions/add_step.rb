@@ -1,4 +1,3 @@
-=begin
 Given(/^I am on the RottenPotatoes home page$/) do
   visit "https://rottenpotatoes-aruk888.c9users.io/movies"
 end
@@ -34,4 +33,3 @@ end
 And(/^I should see a "([^"]*)"$/) do |arg1|
   page.has_content?(arg1)
 end
-=end

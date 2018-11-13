@@ -1,4 +1,16 @@
+%h3 Description
 %p= movie.description
- 
-= link_to 'Edit Movie', edit_movie_path(movie)
-= link_to 'Close', '', {:id => 'closeLink'}
+
+%h3 Rating
+%p= movie.rating
+
+%h3 Released on
+%p= movie.release_date.strftime("%B %d, %Y")
+
+- if current_user
+  = link_to 'Edit Movie', edit_movie_path(movie)
+  = link_to 'Delete', movie_path(movie), :method => :delete
+  = link_to 'Close', '', {:id => 'closeLink'}
+- else
+  Please sign in before edit and delete movies
+  = link_to 'Close', '', {:id => 'closeLink'}

@@ -7,9 +7,6 @@
       %div#img
       =image_tag "https://image.tmdb.org/t/p/w500" + movie.poster_path.to_s
       %li
-        ID:
-        = movie.type
-      %li
         Rating:
         = movie.vote_average
       %li
@@ -17,19 +14,18 @@
         = movie.release_date
       
       %h3 Description:
+      
       %p= movie.overview
+      
       - if (@data.find_by(title: movie.title) == nil or @data.find_by(description: movie.overview) == nil)
-        -#= link_to 'Add '+  movie.title.to_s , addMovie_path(:id => movie.id, :title => movie.title , :release_date => movie.release_date , :description => movie.overview), :method => :addMovieTMDB
-        
-        -#%a{:href=>"/addMovieTMDB", :data => {:title => movie.title, :rating => movie.vote_average, :description => movie.overview, :release_date => movie.release_date}} Add
-        -#= link_to 'Add ', addMovie_path(movie)
-        = form_tag addMovie_path, :method => :post do
-          -#%input{ :type => "hidden", :name => "accountName" }
-          = hidden_field_tag :title, movie.title
-          = hidden_field_tag :rating, movie.vote_average
-          = hidden_field_tag :release_date, movie.release_date
-          = hidden_field_tag :description, movie.overview
-          = submit_tag "Add"
-
+        = form_tag movies_path, :method => :post do |f|
+          = hidden_field :movie, :title, :value => movie.title
+          = hidden_field :movie, :release_date, :value => movie.release_date
+          = hidden_field :movie, :description, :value => movie.overview
+          = label :rating, 'Rating'
+          = select :movie, :rating, ['G','PG','PG-13','R','NC-17','test']
+          
+          
+          = submit_tag 'Add '+  movie.title.to_s 
 
 = link_to 'Back to movie list',  "/",:onclick => "window.location.replace('/movies');" 

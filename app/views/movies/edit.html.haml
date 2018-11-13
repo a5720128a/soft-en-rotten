@@ -17,5 +17,5 @@
   %br
  
   = submit_tag 'Save Changes'
-  = link_to "Cancel", movie_path(@movie)
-  = link_to "Back to movie list", "/",:onclick => "window.location.replace('/movies');"
+  -#= link_to "Cancel", movie_path(@movie)
+  = link_to 'Cancel',  "/",:onclick => "window.location.replace('/movies');"

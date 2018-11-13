@@ -140,35 +140,40 @@ RSpec.describe MoviesController, type: :controller do
         end
         
     end
-    
+
+=begin
+
+----- no needed ,can use create method instead -----
+
     describe "add movie from search tmdb test" do
         
         before (:each) do
-            @title = {:title => 'Space Balls'}
-            @description = {:description => "test"}
-            #@release_date = {:release_date => '2017-06-06'}
-            @rating = {:rating => 'PG'}
+            @title = 'Space Balls'
+            @description = "test"
+            @release_date = '2017-06-06'
+            @rating = 'PG'
         end
       
         it "saves the new movie in the database" do
             expect {
-            post :addMovieTMDB, title: @title, rating: @rating, release_date: '2017-06-06', 
+            post :addMovieTMDB, title: @title, rating: @rating, release_date: @release_date, 
             description: @description
             }.to change(Movie,:count).by(1)
         end
         
         it "assigns the saved movie to @movie" do
-            post :addMovieTMDB, title: @title, rating: @rating, release_date: '2017-06-06', 
+            post :addMovieTMDB, title: @title, rating: @rating, release_date: @release_date, 
             description: @description
             expect(assigns(:query_movie).title).to include("Space Balls")
         end
         
         it "redirects to the movie page" do
-            post :addMovieTMDB, title: @title, rating: @rating, release_date: '2017-06-06', 
+            post :addMovieTMDB, title: @title, rating: @rating, release_date: @release_date, 
             description: @description
             expect(response).to redirect_to("/movies/#{assigns(:query_movie).id}")
         end
         
     end
+=end
     
 end

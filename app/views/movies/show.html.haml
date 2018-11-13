@@ -12,16 +12,6 @@
  
 %p#description= @movie.description
 
-
-- if current_user
-  = link_to 'Edit info', edit_movie_path(@movie)
-  -# This Delete link will not really be a link, but a form:
-  = button_to 'Delete', movie_path(@movie), :method => :delete
-  = link_to "Cancel", movies_path
-  
-- else
-  = 'Please sign in before edit and delete movies'
-  = link_to "Cancel", movies_path
-
+= link_to "Back to movie list", "/",:onclick => "window.location.replace('/movies');" 
 
 

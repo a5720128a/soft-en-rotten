@@ -1,12 +1,13 @@
-=begin
 Given(/^I am on the RotenPotatoes home page$/) do
-  #visit "https://rottenpotatoes-aruk888.c9users.io/movies"
+  #visit "https://rottenpotatoes-aruk888.c9users.io/movies/101"
   visit "https://rottenpotatoes-aruk888.c9users.io/movies"
 end
 
+
+
 When(/^I follow a "([^"]*)"$/) do |arg1|
-  #click_link('https://rottenpotatoes-aruk888.c9users.io/movies/1')
-  visit "https://rottenpotatoes-aruk888.c9users.io/movies/new"
+  
+  find('table').all('tr').map { |row| row.all('th, td').map { |arg1| arg1.text.strip } }
 end
 
 Then(/^I should see header "([^"]*)"$/) do |arg1|
@@ -14,4 +15,3 @@ Then(/^I should see header "([^"]*)"$/) do |arg1|
   visit "https://rottenpotatoes-aruk888.c9users.io/movies/"
 end
 
-=end
